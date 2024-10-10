@@ -18,20 +18,20 @@ app.append(header);
 let start: DOMHighResTimeStamp;
 let lastElapsed: DOMHighResTimeStamp = 0;
 function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
-    if(start === undefined) start = timestamp;
-    const elapsed: DOMHighResTimeStamp = timestamp - start;
-    if(elapsed - lastElapsed > 1000 && elapsed != 0) {
-        counter++;
-        resourceValueCounter.innerHTML = `${counter} buttons mashed`;
-        lastElapsed = elapsed;
-    }
-    
-    requestAnimationFrame(incrementButtonsTime);
+  if (start === undefined) start = timestamp;
+  const elapsed: DOMHighResTimeStamp = timestamp - start;
+  if (elapsed - lastElapsed > 1000 && elapsed != 0) {
+    counter++;
+    resourceValueCounter.innerHTML = `${counter} buttons mashed`;
+    lastElapsed = elapsed;
+  }
+
+  requestAnimationFrame(incrementButtonsTime);
 }
 
 function incrementButtonsClicks() {
-    counter++;
-    resourceValueCounter.innerHTML = `${counter} buttons mashed`;
+  counter++;
+  resourceValueCounter.innerHTML = `${counter} buttons mashed`;
 }
 
 //used brace for this https://chat.brace.tools/s/aa2a1e9a-e4f8-44fb-9dd7-385748f720b5
