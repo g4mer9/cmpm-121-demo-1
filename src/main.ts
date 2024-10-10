@@ -31,3 +31,4 @@ document.body.append(resourceValue);
 
 const b = document.getElementById("Button Masher");
 if (b) b.addEventListener("click", incrementButtons, false);
+setInterval(incrementButtons, 1000);
