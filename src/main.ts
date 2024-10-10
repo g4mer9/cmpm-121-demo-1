@@ -2,7 +2,6 @@ import "./style.css";
 
 //very messy code! i will clean it with steps 6->10!
 
-
 let counter: number = 0;
 const app: HTMLDivElement = document.querySelector("#app")!;
 const resourceValue: HTMLDivElement = document.querySelector("#app")!;
@@ -30,11 +29,13 @@ upgradeButton.innerHTML = "Buy Controller 🕹️: 10 mashes";
 upgradeButton.id = "Buy Controller";
 upgradeButton.style.color = "white";
 upgradeButton.style.backgroundColor = "black";
-upgradeButton.style.textDecoration = 'line-through';//used brace for line-through/none https://chat.brace.tools/s/811df2dc-d79a-49c4-9792-ea05329197d5
+upgradeButton.style.textDecoration = "line-through"; //used brace for line-through/none https://chat.brace.tools/s/811df2dc-d79a-49c4-9792-ea05329197d5
 app.append(upgradeButton);
 
 //end part 'as HTMLButtonElement' cleared an error, got it from brace https://chat.brace.tools/s/7d0d16ca-d3cf-464f-b35f-44e49a6098e1
-const upgradeButtonRef = document.getElementById("Buy Controller") as HTMLButtonElement;
+const upgradeButtonRef = document.getElementById(
+  "Buy Controller",
+) as HTMLButtonElement;
 upgradeButtonRef.disabled = true;
 
 //used mdn docs example for this part https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame#examples
@@ -43,28 +44,33 @@ let lastElapsed: DOMHighResTimeStamp = 0;
 let autoClickRateMS = 0; //1000 means 1 click per sec
 let autoClickStrength = 1;
 
-
 //basically using this as a step/update function now lol
 function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
   if (start === undefined) start = timestamp;
   const elapsed: DOMHighResTimeStamp = timestamp - start;
-  if (autoClickRateMS > 0 && elapsed - lastElapsed > autoClickRateMS && elapsed != 0) {
+  if (
+    autoClickRateMS > 0 &&
+    elapsed - lastElapsed > autoClickRateMS &&
+    elapsed != 0
+  ) {
     counter += autoClickStrength;
     resourceValueCounter.innerHTML = `${counter} buttons mashed`;
     lastElapsed = elapsed;
   }
 
-  if(counter >= 10) {
-    upgradeButtonRef.style.textDecoration = 'none';
+  if (counter >= 10) {
+    upgradeButtonRef.style.textDecoration = "none";
     upgradeButtonRef.disabled = false;
     upgradeButtonRef.addEventListener("click", increaseButtonsTimeRate, false);
-  }
-  else {
-    upgradeButtonRef.style.textDecoration = 'line-through';
+  } else {
+    upgradeButtonRef.style.textDecoration = "line-through";
     upgradeButtonRef.disabled = true;
 
-    
-    upgradeButtonRef.removeEventListener("click", increaseButtonsTimeRate, false); //used GPT to find removeEventListener https://chatgpt.com/share/6708650f-066c-8007-b393-0f359ee8bb76
+    upgradeButtonRef.removeEventListener(
+      "click",
+      increaseButtonsTimeRate,
+      false,
+    ); //used GPT to find removeEventListener https://chatgpt.com/share/6708650f-066c-8007-b393-0f359ee8bb76
   }
   requestAnimationFrame(incrementButtonsTime);
 }
@@ -75,13 +81,11 @@ function incrementButtonsClicks() {
 }
 
 function increaseButtonsTimeRate() {
-    counter -=10;
-    resourceValueCounter.innerHTML = `${counter} buttons mashed`;
-    if(autoClickRateMS == 0) autoClickRateMS = 1000;
-    else autoClickStrength++;
+  counter -= 10;
+  resourceValueCounter.innerHTML = `${counter} buttons mashed`;
+  if (autoClickRateMS == 0) autoClickRateMS = 1000;
+  else autoClickStrength++;
 }
-
-
 
 document.body.append(resourceValue);
 
