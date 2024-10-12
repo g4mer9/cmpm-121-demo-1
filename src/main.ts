@@ -2,15 +2,18 @@ import "./style.css";
 
 interface Item {
   name: string,
+  description: string,
   cost: number,
   rate: number,
   count: number
 }
 
 const availableItems: Item[] = [
-  {name: "Controller 🕹️", cost: 10, rate: 0.1, count: 0},
-  {name: "Button Mashing Grandma 👵", cost: 100, rate: 2, count: 0},
-  {name: "Turbo Controller ⏩", cost: 1000, rate: 50, count: 0}
+  {name: "Controller 🕹️", description: "Standard controller for mashing purposes. The buttons are already worn down.", cost: 10, rate: 0.1, count: 0},
+  {name: "Button Mashing Grandma 👵", description: "Poached from the cookie farm layoffs, worse than you at mashing.", cost: 10, rate: 2, count: 0},
+  {name: "Turbo Controller ⏩", description: "Makes your grandmas more efficient by replacing mashing buttons with holding them.", cost: 10, rate: 50, count: 0},
+  {name: "Button Mashing Machine 🤖", description: "Much faster than you or your grandmas at mashing those buttons.", cost: 20, rate: 100, count: 0},
+  {name: "Ludwig 👨", description: "Self-proclaimed best button masher in the world.", cost: 10, rate: 1000, count: 0},
 ];
 
 
@@ -28,9 +31,14 @@ const growthRate = document.createElement("p");
 const upgradeOneCountScreen = document.createElement("p");
 const upgradeTwoCountScreen = document.createElement("p");
 const upgradeThreeCountScreen = document.createElement("p");
-upgradeOneCountScreen.innerHTML = `${availableItems[0].count} ${availableItems[0].name} owned`;
-upgradeTwoCountScreen.innerHTML = `${availableItems[1].count} ${availableItems[1].name} owned`;
-upgradeThreeCountScreen.innerHTML = `${availableItems[2].count} ${availableItems[2].name} owned`;
+const upgradeFourCountScreen = document.createElement("p");
+const upgradeFiveCountScreen = document.createElement("p");
+upgradeOneCountScreen.innerHTML = `${availableItems[0].count} ${availableItems[0].name} owned - ${availableItems[0].description}`;
+upgradeTwoCountScreen.innerHTML = `${availableItems[1].count} ${availableItems[1].name} owned - ${availableItems[1].description}`;
+upgradeThreeCountScreen.innerHTML = `${availableItems[2].count} ${availableItems[2].name} owned - ${availableItems[2].description}`;
+upgradeFourCountScreen.innerHTML = `${availableItems[3].count} ${availableItems[3].name} owned - ${availableItems[3].description}`;
+upgradeFiveCountScreen.innerHTML = `${availableItems[4].count} ${availableItems[4].name} owned - ${availableItems[4].description}`;
+
 
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`
 resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
@@ -39,6 +47,9 @@ resourceValue.append(growthRate);
 resourceValue.append(upgradeOneCountScreen);
 resourceValue.append(upgradeTwoCountScreen);
 resourceValue.append(upgradeThreeCountScreen);
+resourceValue.append(upgradeFourCountScreen);
+resourceValue.append(upgradeFiveCountScreen);
+
 
 
 
@@ -78,6 +89,22 @@ upgradeButtonThree.style.backgroundColor = "black";
 upgradeButtonThree.style.textDecoration = "line-through"; //used brace for line-through/none https://chat.brace.tools/s/811df2dc-d79a-49c4-9792-ea05329197d5
 app.append(upgradeButtonThree);
 
+const upgradeButtonFour: HTMLButtonElement = document.createElement("button");
+upgradeButtonFour.innerHTML = `Buy ${availableItems[3].name}: ${availableItems[3].cost} mashes`;
+upgradeButtonFour.id = `Buy ${availableItems[3].name}`;
+upgradeButtonFour.style.color = "white";
+upgradeButtonFour.style.backgroundColor = "black";
+upgradeButtonFour.style.textDecoration = "line-through"; //used brace for line-through/none https://chat.brace.tools/s/811df2dc-d79a-49c4-9792-ea05329197d5
+app.append(upgradeButtonFour);
+
+const upgradeButtonFive: HTMLButtonElement = document.createElement("button");
+upgradeButtonFive.innerHTML = `Buy ${availableItems[4].name}: ${availableItems[4].cost} mashes`;
+upgradeButtonFive.id = `Buy ${availableItems[4].name}`;
+upgradeButtonFive.style.color = "white";
+upgradeButtonFive.style.backgroundColor = "black";
+upgradeButtonFive.style.textDecoration = "line-through"; //used brace for line-through/none https://chat.brace.tools/s/811df2dc-d79a-49c4-9792-ea05329197d5
+app.append(upgradeButtonFive);
+
 
 
 //end part 'as HTMLButtonElement' cleared an error, got it from brace https://chat.brace.tools/s/7d0d16ca-d3cf-464f-b35f-44e49a6098e1
@@ -94,17 +121,30 @@ const upgradeButtonRefThree = document.getElementById(
   `Buy ${availableItems[2].name}`,
 ) as HTMLButtonElement;
 upgradeButtonRefThree.disabled = true;
+const upgradeButtonRefFour = document.getElementById(
+  `Buy ${availableItems[3].name}`,
+) as HTMLButtonElement;
+upgradeButtonRefThree.disabled = true;
+const upgradeButtonRefFive = document.getElementById(
+  `Buy ${availableItems[4].name}`,
+) as HTMLButtonElement;
+upgradeButtonRefThree.disabled = true;
 
 const buttonArr: HTMLButtonElement[] = [
   upgradeButtonRefOne,
   upgradeButtonRefTwo,
-  upgradeButtonRefThree
+  upgradeButtonRefThree,
+  upgradeButtonRefFour,
+  upgradeButtonRefFive
 ];
 
 
 upgradeButtonRefOne.addEventListener("click", (event) => increaseButtonsTimeRate("0", event), false);
 upgradeButtonRefTwo.addEventListener("click", (event) => increaseButtonsTimeRate("1", event), false);
 upgradeButtonRefThree.addEventListener("click", (event) => increaseButtonsTimeRate("2", event), false);
+upgradeButtonRefFour.addEventListener("click", (event) => increaseButtonsTimeRate("3", event), false);
+upgradeButtonRefFive.addEventListener("click", (event) => increaseButtonsTimeRate("4", event), false);
+
 
 
 
@@ -161,22 +201,31 @@ function increaseButtonsTimeRate(i: string, _event : Event) {
   resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
   if (autoClickRateMS == 0) autoClickRateMS = 1000;
   autoClickStrength += availableItems[index].rate;
+  //im not sure if my prettier broke, or if the indentations below are acceptable
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
 availableItems[index].count++;
 availableItems[index].cost = availableItems[index].cost * 1.15;
 
 switch(index) {
   case 0:
-    upgradeOneCountScreen.innerHTML = `${availableItems[0].count} ${availableItems[0].name} owned`;
+    upgradeOneCountScreen.innerHTML = `${availableItems[0].count} ${availableItems[0].name} owned - ${availableItems[0].description}`;
     upgradeButtonOne.innerHTML = `Buy ${availableItems[0].name}: ${availableItems[0].cost} mashes`;
     break;
   case 1:
-    upgradeTwoCountScreen.innerHTML = `${availableItems[1].count} ${availableItems[1].name} owned`;
+    upgradeTwoCountScreen.innerHTML = `${availableItems[1].count} ${availableItems[1].name} owned - ${availableItems[1].description}`;
     upgradeButtonTwo.innerHTML = `Buy ${availableItems[1].name}: ${availableItems[1].cost} mashes`;
     break;
   case 2:
-    upgradeThreeCountScreen.innerHTML = `${availableItems[2].count} ${availableItems[2].name} owned`;
+    upgradeThreeCountScreen.innerHTML = `${availableItems[2].count} ${availableItems[2].name} owned - ${availableItems[2].description}`;
     upgradeButtonThree.innerHTML = `Buy ${availableItems[2].name}: ${availableItems[2].cost} mashes`;
+    break;
+  case 3:
+    upgradeFourCountScreen.innerHTML = `${availableItems[3].count} ${availableItems[3].name} owned - ${availableItems[3].description}`;
+    upgradeButtonFour.innerHTML = `Buy ${availableItems[3].name}: ${availableItems[3].cost} mashes`;
+    break;
+  case 4:
+    upgradeFiveCountScreen.innerHTML = `${availableItems[4].count} ${availableItems[4].name} owned - ${availableItems[4].description}`;
+    upgradeButtonFive.innerHTML = `Buy ${availableItems[4].name}: ${availableItems[4].cost} mashes`;
     break;
 }
 
