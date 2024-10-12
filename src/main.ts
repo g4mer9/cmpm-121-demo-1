@@ -15,6 +15,7 @@ let upgradeThreePrice : number = 1000;
 
 
 //i was going to refactor some stuff, but i guess i should wait for step 9 lol
+//i already had a theme, so step 8 was already done
 
 
 //INNER HTML SETUP==================================================================================================================================================
