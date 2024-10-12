@@ -8,6 +8,10 @@ let autoClickStrength : number = 0.1;
 let upgradeOneCount : number = 0;
 let upgradeTwoCount : number = 0;
 let upgradeThreeCount : number = 0;
+let upgradeOnePrice : number = 10;
+let upgradeTwoPrice : number = 100;
+let upgradeThreePrice : number = 1000;
+
 
 
 //i was going to refactor some stuff, but i guess i should wait for step 9 lol
@@ -48,7 +52,7 @@ button.style.color = "black";
 button.style.backgroundColor = "white";
 app.append(button);
 const upgradeButtonOne: HTMLButtonElement = document.createElement("button");
-upgradeButtonOne.innerHTML = "Buy Controller 🕹️: 10 mashes";
+upgradeButtonOne.innerHTML = `Buy Controller 🕹️: ${upgradeOnePrice} mashes`;
 upgradeButtonOne.id = "Buy Controller";
 upgradeButtonOne.style.color = "white";
 upgradeButtonOne.style.backgroundColor = "black";
@@ -56,7 +60,7 @@ upgradeButtonOne.style.textDecoration = "line-through"; //used brace for line-th
 app.append(upgradeButtonOne);
 
 const upgradeButtonTwo: HTMLButtonElement = document.createElement("button");
-upgradeButtonTwo.innerHTML = "Buy Button-Mashing-Grandma 👵: 100 mashes";
+upgradeButtonTwo.innerHTML = `Buy Button-Mashing-Grandma 👵: ${upgradeTwoPrice} mashes`;
 upgradeButtonTwo.id = "Buy Grandma";
 upgradeButtonTwo.style.color = "white";
 upgradeButtonTwo.style.backgroundColor = "black";
@@ -64,7 +68,7 @@ upgradeButtonTwo.style.textDecoration = "line-through"; //used brace for line-th
 app.append(upgradeButtonTwo);
 
 const upgradeButtonThree: HTMLButtonElement = document.createElement("button");
-upgradeButtonThree.innerHTML = "Buy Turbo Controller ⏩: 1000 mashes";
+upgradeButtonThree.innerHTML = `Buy Turbo Controller ⏩: ${upgradeThreePrice} mashes`;
 upgradeButtonThree.id = "Buy Turbo";
 upgradeButtonThree.style.color = "white";
 upgradeButtonThree.style.backgroundColor = "black";
@@ -80,11 +84,11 @@ upgradeButtonRefOne.disabled = true;
 const upgradeButtonRefTwo = document.getElementById(
   "Buy Grandma",
 ) as HTMLButtonElement;
-upgradeButtonRefOne.disabled = true;
+upgradeButtonRefTwo.disabled = true;
 const upgradeButtonRefThree = document.getElementById(
   "Buy Turbo",
 ) as HTMLButtonElement;
-upgradeButtonRefOne.disabled = true;
+upgradeButtonRefThree.disabled = true;
 
 
 //MAIN LOOP========================================================================================================================================================
@@ -107,7 +111,7 @@ function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
     lastElapsed = elapsed;
   }
 
-  if (counter >= 10) {
+  if (counter >= upgradeOnePrice) {
     upgradeButtonRefOne.style.textDecoration = "none";
     upgradeButtonRefOne.disabled = false;
     upgradeButtonRefOne.addEventListener("click", increaseButtonsTimeRateOne, false);
@@ -122,7 +126,7 @@ function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
     ); //used GPT to find removeEventListener https://chatgpt.com/share/6708650f-066c-8007-b393-0f359ee8bb76
   }
 
-  if (counter >= 100) {
+  if (counter >= upgradeTwoPrice) {
     upgradeButtonRefTwo.style.textDecoration = "none";
     upgradeButtonRefTwo.disabled = false;
     upgradeButtonRefTwo.addEventListener("click", increaseButtonsTimeRateTwo, false);
@@ -137,7 +141,7 @@ function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
     ); //used GPT to find removeEventListener https://chatgpt.com/share/6708650f-066c-8007-b393-0f359ee8bb76
   }
 
-  if (counter >= 1000) {
+  if (counter >= upgradeThreePrice) {
     upgradeButtonRefThree.style.textDecoration = "none";
     upgradeButtonRefThree.disabled = false;
     upgradeButtonRefThree.addEventListener("click", increaseButtonsTimeRateThree, false);
@@ -162,33 +166,42 @@ function incrementButtonsClicks() {
 }
 
 function increaseButtonsTimeRateOne() {
-  counter -= 10;
+  counter -= upgradeOnePrice;
   resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
   if (autoClickRateMS == 0) autoClickRateMS = 1000;
   else autoClickStrength += 0.1;
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
 upgradeOneCount++;
 upgradeOneCountScreen.innerHTML = `${upgradeOneCount} controllers owned`;
+upgradeOnePrice = upgradeOnePrice * 1.15;
+upgradeButtonOne.innerHTML = `Buy Controller 🕹️: ${upgradeOnePrice} mashes`;
+
 }
 
 function increaseButtonsTimeRateTwo() {
-  counter -= 100;
+  counter -= upgradeTwoPrice;
   resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
   if (autoClickRateMS == 0) autoClickRateMS = 1000;
   else autoClickStrength += 2;
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
 upgradeTwoCount++;
 upgradeTwoCountScreen.innerHTML = `${upgradeTwoCount} grandmas owned`;
+upgradeTwoPrice = upgradeTwoPrice * 1.15;
+upgradeButtonTwo.innerHTML = `Buy Button-Mashing-Grandma 👵: ${upgradeTwoPrice} mashes`;
+
 }
 
 function increaseButtonsTimeRateThree() {
-  counter -= 1000;
+  counter -= upgradeThreePrice;
   resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
   if (autoClickRateMS == 0) autoClickRateMS = 1000;
   else autoClickStrength += 50;
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
 upgradeThreeCount++;
 upgradeThreeCountScreen.innerHTML = `${upgradeThreeCount} turbo controllers owned`;
+upgradeThreePrice = upgradeThreePrice * 1.15;
+upgradeButtonThree.innerHTML = `Buy Turbo Controller ⏩: ${upgradeThreePrice} mashes`;
+
 }
 
 document.body.append(resourceValue);
