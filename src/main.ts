@@ -22,6 +22,33 @@ let counter: number = 0;
 let autoClickRateMS: number = 0; //1000 means 1 click per sec
 let autoClickStrength : number = 0;
 
+//HELPER FUNCTIONS====================================================================================================================================================
+
+function incrementButtonsClicks() {
+  counter++;
+  resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function upgradeRate(i: number, _event : Event) {
+  const index: number = i;
+  counter -= availableItems[index].cost;
+  
+  resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
+  if (autoClickRateMS == 0) autoClickRateMS = 1000;
+  autoClickStrength += availableItems[index].rate;
+  //im not sure if my prettier broke, or if the indentations below are acceptable
+growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
+availableItems[index].count++;
+availableItems[index].cost = availableItems[index].cost * 1.15;
+
+const upgradeButton = document.getElementById(`Buy ${availableItems[index].name}`) as HTMLButtonElement;
+const upgradeButtonScreen = document.getElementById(`${availableItems[index].name}`);
+if(upgradeButtonScreen) upgradeButtonScreen.innerHTML = `${availableItems[index].count} ${availableItems[index].name} owned - ${availableItems[index].description}`;
+upgradeButton.innerHTML = `Buy ${availableItems[index].name}: ${availableItems[index].cost} mashes`;
+
+}
+
 
 //INNER HTML SETUP==================================================================================================================================================
 const app: HTMLDivElement = document.querySelector("#app")!;
@@ -42,7 +69,7 @@ availableItems.forEach((item, index) => {
   upgradeButton.disabled = true;
   app.append(upgradeCountScreen, upgradeButton);
 
-  upgradeButton.addEventListener("click", (event) => increaseButtonsTimeRate(String(index), event), false);
+  upgradeButton.addEventListener("click", (event) => upgradeRate(index, event), false);
 });
 resourceValue.append(resourceValueCounter, growthRate);
 
@@ -96,32 +123,7 @@ function incrementButtonsTime(timestamp: DOMHighResTimeStamp) {
   requestAnimationFrame(incrementButtonsTime);
 }
 
-//HELPER FUNCTIONS====================================================================================================================================================
 
-function incrementButtonsClicks() {
-  counter++;
-  resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function increaseButtonsTimeRate(i: string, _event : Event) {
-  const index: number = Number(i);
-  counter -= availableItems[index].cost;
-  
-  resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
-  if (autoClickRateMS == 0) autoClickRateMS = 1000;
-  autoClickStrength += availableItems[index].rate;
-  //im not sure if my prettier broke, or if the indentations below are acceptable
-growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
-availableItems[index].count++;
-availableItems[index].cost = availableItems[index].cost * 1.15;
-
-const upgradeButton = document.getElementById(`Buy ${availableItems[index].name}`) as HTMLButtonElement;
-const upgradeButtonScreen = document.getElementById(`${availableItems[index].name}`);
-if(upgradeButtonScreen) upgradeButtonScreen.innerHTML = `${availableItems[index].count} ${availableItems[index].name} owned - ${availableItems[index].description}`;
-upgradeButton.innerHTML = `Buy ${availableItems[index].name}: ${availableItems[index].cost} mashes`;
-
-}
 document.body.append(resourceValue);
 
 //setup click
