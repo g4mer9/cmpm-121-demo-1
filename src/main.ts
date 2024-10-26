@@ -20,6 +20,7 @@ const availableItems: Item[] = [
 //important variables
 let counter: number = 0;
 let autoClickRateMS: number = 0; //1000 means 1 click per sec
+const AUTO_CLICK_MS = 1000;
 let autoClickStrength : number = 0;
 
 //HELPER FUNCTIONS====================================================================================================================================================
@@ -35,7 +36,7 @@ function upgradeRate(i: number, _event : Event) {
   counter -= availableItems[index].cost;
   
   resourceValueCounter.innerHTML = `${Math.floor(counter)} buttons mashed`;
-  if (autoClickRateMS == 0) autoClickRateMS = 1000;
+  if (autoClickRateMS == 0) autoClickRateMS = AUTO_CLICK_MS;
   autoClickStrength += availableItems[index].rate;
   //im not sure if my prettier broke, or if the indentations below are acceptable
 growthRate.innerHTML = `${autoClickStrength * (autoClickRateMS / 1000)} buttons being mashed per second`;
