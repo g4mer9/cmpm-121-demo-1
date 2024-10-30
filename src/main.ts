@@ -95,7 +95,9 @@ header.innerHTML = "My button mashing game";
 app.append(header);
 
 //used brace for this https://chat.brace.tools/s/aa2a1e9a-e4f8-44fb-9dd7-385748f720b5
-const button: HTMLButtonElement = document.createElement("bigButton") as HTMLButtonElement;
+const button: HTMLButtonElement = document.createElement(
+  "bigButton",
+) as HTMLButtonElement;
 button.innerHTML = "Mash Button 🎮";
 button.id = "Button Masher";
 button.style.cssText = "color: black; background-color: white";
