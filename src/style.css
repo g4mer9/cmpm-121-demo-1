@@ -13,7 +13,23 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+body {
+  animation: backgroundChange 10s infinite alternate;
+}
+@keyframes backgroundChange {
+  0% {
+    background-color: #ff0000;
+  }
+  33% {
+    background-color: #02c952;
+  }
+  66% {
+    background-color: #006aff;
+  }
+  100% {
+    background-color: #ff00c8;
+  }
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -41,6 +57,18 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+bigButton {
+  border-radius: 8px;
+  border: 5px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 2em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 button {
