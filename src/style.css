@@ -16,6 +16,8 @@
 body {
   animation: backgroundChange 10s infinite alternate;
 }
+
+/*code from https://scso-ucsc.github.io/Incremental-Game-Development/*/
 @keyframes backgroundChange {
   0% {
     background-color: #ff0000;

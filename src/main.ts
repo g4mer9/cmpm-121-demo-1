@@ -88,6 +88,7 @@ function upgradeRate(i: number, _event: Event) {
 }
 
 //INNER HTML SETUP==================================================================================================================================================
+//idea to reorder text came from https://scso-ucsc.github.io/Incremental-Game-Development/
 const app: HTMLDivElement = document.querySelector("#app")!;
 document.title = "My button mashing game";
 const header = document.createElement("h1");
